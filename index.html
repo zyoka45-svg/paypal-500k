@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>お支払い（50万円）</title>
+</head>
+<body>
+  <h2>お支払い（50万円）</h2>
+
+  <div id="paypal-button-container"></div>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=YOUR_SANDBOX_CLIENT_ID&currency=JPY&components=buttons"></script>
+
+  <script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            description: "お支払い（50万円）",
+            amount: { value: "500000" }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function() {
+          alert("お支払いありがとうございます。");
+        });
+      }
+    }).render("#paypal-button-container");
+  </script>
+</body>
+</html>
